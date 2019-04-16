@@ -7,26 +7,19 @@
 package com.stah.kodeinsample
 
 import org.kodein.di.Kodein
-import org.kodein.di.android.support.BuildConfig
 import org.kodein.di.direct
 import org.kodein.di.generic.bind
-import org.kodein.di.generic.singleton
+import org.kodein.di.generic.instance
+import org.kodein.di.generic.provider
 import org.kodein.di.newInstance
 
 class KodeinCreator : MyApp.Creator {
 
     private val kodein = Kodein {
-        when (BuildConfig.FLAVOR) {
-            "release" -> bind<DiLog>() with singleton { DiLogImp() }
-            "debug" -> bind<DiLog>() with singleton { DiLogTestImpl() }
-        }
+        bind<DiLog>() with provider { DiLogImp() }
     }.direct
 
-    override fun myActivity() = kodein.newInstance {
-
-        DiLogImp()
-
-    }
+    override fun myActivity() = kodein.newInstance { MainActivity.LogImpl(instance()) }
 
 
 }

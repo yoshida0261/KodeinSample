@@ -14,12 +14,11 @@ import org.kodein.di.newInstance
 
 class TestCreator : MyApp.Creator {
     private val kodein = Kodein {
-        when (BuildConfig.FLAVOR) {
-        }
+
     }.direct
 
     override fun myActivity() = kodein.newInstance {
-        println("ああああああああああああああああああああああ")
+
         DiMock()
     }
 }
